@@ -1,0 +1,59 @@
+.post-list {
+  padding: 4px 8px 4px 8px;
+}
+
+.post-author-avatar {
+  background-color: #ccd;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.post-content {
+  margin-left: 16px;
+}
+
+.post-info {
+  font-size: small;
+  margin-bottom: 6px;
+}
+
+.post-author {
+  font-weight: bold;
+}
+
+.post-visibility {
+  color: #888;
+}
+
+.post-age {
+  color: #888;
+  margin-left: 8px;
+  font-size: small;
+}
+
+.post-body {
+  font-size: 16px;
+}
+
+.post-attachments {
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.post-comments {
+  background-color: #eee;
+  padding: 6px;
+  overflow-y: scroll;
+}
+
+.post-comment-form {
+}
+
+.post-comment-input {
+  display: block;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  margin-left: 16px;
+}

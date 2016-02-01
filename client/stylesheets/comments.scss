@@ -1,0 +1,29 @@
+.comment {
+  margin: 8px 0;
+}
+
+.comment-author-avatar {
+  background-color: #ccd;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin: 0 8px;
+}
+
+.comment-info {
+  font-size: small;
+  margin-bottom: 6px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-age {
+  color: #888;
+  margin-left: 8px;
+}
+
+.comment-body {
+  font-size: 14px;
+}

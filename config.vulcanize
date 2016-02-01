@@ -1,0 +1,22 @@
+{
+    "polyfill": "/components/webcomponentsjs/webcomponents-lite.min.js",
+    "useShadowDom": true,
+    "imports": [
+        "/components/iron-autogrow-textarea/iron-autogrow-textarea.html",
+        "/components/iron-flex-layout/iron-flex-layout.html",
+        "/components/iron-flex-layout/classes/iron-flex-layout.html",
+        "/components/iron-icons/iron-icons.html",
+        "/components/iron-icons/social-icons.html",
+        "/components/paper-badge/paper-badge.html",
+        "/components/paper-button/paper-button.html",
+        "/components/paper-card/paper-card.html",
+        "/components/paper-header-panel/paper-header-panel.html",
+        "/components/paper-icon-button/paper-icon-button.html",
+        "/components/paper-input/paper-textarea.html",
+        "/components/paper-item/paper-item.html",
+        "/components/paper-menu/paper-menu.html",
+        "/components/paper-menu-button/paper-menu-button.html",
+        "/components/paper-styles/color.html",
+        "/components/paper-toolbar/paper-toolbar.html"
+    ]
+}

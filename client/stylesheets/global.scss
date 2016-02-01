@@ -1,0 +1,44 @@
+html body {
+  color: black;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+paper-toolbar {
+  color: white;
+}
+
+paper-card {
+  display: block;
+  margin-top: 12px;
+}
+
+.post-image-1 {
+  width: 100px;
+  height: 70px;
+  background-color: #ccf;
+  margin: 8px;
+}
+
+.post-image-2 {
+  width: 120px;
+  height: 70px;
+  background-color: #cfc;
+  margin: 8px;
+}
+
+.post-image-3 {
+  width: 80px;
+  height: 70px;
+  background-color: #fcc;
+  margin: 8px;
+}
+
+.post-image-4 {
+  width: 90px;
+  height: 70px;
+  background-color: #fcf;
+  margin: 8px;
+}
