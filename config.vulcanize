@@ -12,6 +12,7 @@
         "/components/paper-card/paper-card.html",
         "/components/paper-header-panel/paper-header-panel.html",
         "/components/paper-icon-button/paper-icon-button.html",
+        "/components/paper-input/paper-input.html",
         "/components/paper-input/paper-textarea.html",
         "/components/paper-item/paper-item.html",
         "/components/paper-menu/paper-menu.html",

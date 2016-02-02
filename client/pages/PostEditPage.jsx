@@ -10,7 +10,7 @@ PostEditPage = React.createClass({
     return (
       <paper-header-panel className="flex">
         <AppBar />
-        <Post />
+        <PostForm />
       </paper-header-panel>
     );
   }
