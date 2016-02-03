@@ -1,4 +1,4 @@
-$paper-blue-500: #2196f3;
+@import "colors.scss";
 
 .post-form {
   margin: 4px 8px;
@@ -12,14 +12,18 @@ $paper-blue-500: #2196f3;
 }
 
 .post-form-submit {
-  background: $paper-blue-500;
-  color: white;
+  background: $primary-color;
+  color: $primary-color-text;
   margin-right: 0;
+}
+
+.post-form-submit[disabled] {
+  background: $primary-color-light;
 }
 
 .fr-toolbar {
   border-top-width: 0;
-  background-color: #ddd;
+  background-color: $editor-toolbar-color;
 }
 
 .post-editor {

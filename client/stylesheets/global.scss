@@ -1,19 +1,23 @@
+@import "colors.scss";
+
 html body {
-  color: black;
+  color: $primary-text-color;
   background: white;
   font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 paper-toolbar {
-  color: white;
+  background-color: $primary-color;
+  color: $primary-color-text;
 }
 
 paper-card {
   display: block;
   margin-top: 12px;
 }
+
+// Demo only
 
 .post-image-1 {
   width: 100px;
