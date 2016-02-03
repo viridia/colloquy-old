@@ -14,6 +14,7 @@
         "/components/paper-icon-button/paper-icon-button.html",
         "/components/paper-input/paper-input.html",
         "/components/paper-input/paper-textarea.html",
+        "/components/paper-input-autocomplete-chips/paper-input-autocomplete-chips.html",
         "/components/paper-item/paper-item.html",
         "/components/paper-menu/paper-menu.html",
         "/components/paper-menu-button/paper-menu-button.html",

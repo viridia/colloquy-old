@@ -1,0 +1,36 @@
+{
+  "name": "paper-input-autocomplete-chips",
+  "version": "0.22.2",
+  "authors": [
+    "Vinicius Patrinhani <patrinhani@ciandt.com>"
+  ],
+  "description": "Web Component for Input autocomplete chips based on Polymer Paper Elements.",
+  "keywords": [
+    "web-component",
+    "polymer",
+    "material",
+    "autocomplete",
+    "chips"
+  ],
+  "main": "paper-input-autocomplete-chips.html",
+  "license": "http://polymer.github.io/LICENSE.txt",
+  "homepage": "https://github.com/<USERNAME>/seed-element/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.2.3",
+    "paper-menu": "Polymerelements/paper-menu#~1.1.1",
+    "paper-input": "Polymerelements/paper-input#~1.0.15",
+    "paper-item": "Polymerelements/paper-item#~1.0.3",
+    "iron-icons": "Polymerelements/iron-icons#~1.0.4",
+    "paper-icon-button": "Polymerelements/paper-icon-button#~1.0.6",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys#~1.0.2",
+    "paper-chip": "WebPaperElements/paper-chip#^1.0.7"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "web-component-tester": "*"
+  }
+}

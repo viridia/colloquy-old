@@ -1,0 +1,364 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-behaviors/iron-control-state.html">
+
+<script>
+
+  var WebPaperElem = WebPaperElem || {};
+
+  WebPaperElem.InputAutoCompleteBehaviorImpl = {
+	  properties: {
+      selectedItem: {
+        type: Object,
+      },
+      selectedItemText: {
+        type: String,
+      },
+      /**
+       * The candidates from local variable.
+       */
+      localCandidates:{
+        type:Array,
+        value:[]
+      },
+      /**
+       * Remote URL.
+       */
+      remoteUrl:{
+        type:String,
+        value:''
+      },
+      /**
+       * Internal variable holding all matched suggestions.
+       */
+      _suggestions:{
+        type:Array,
+        value:[]
+      },
+      /**
+       * Maximum number of suggestions to show up in typeahead.
+       */
+      maxSuggestions:{
+        type:Number,
+        value:5
+      },
+      
+      allowSelectUnknownToken: {
+        type: Boolean,
+        value: false
+      },
+
+      tokenAcceptKeyCodes: {
+        type: String,
+        value: '',
+        observer: '_tokenAcceptKeyCodesChanged'
+      },
+
+      /**
+       * The attribute to listen for value changes on.
+       */
+      attrForValue: {
+        type: String,
+        value: 'bind-value'
+      },
+	  },
+
+    _tokenAcceptKeyCodesChanged: function (newValue) {
+      this.tokenAcceptKeyCodesArray = (newValue) ? newValue.split(',') : [];
+      this.tokenAcceptKeyCodesArray.push('13'); /* return key is default. */
+    },
+
+    get _propertyForValue() {
+      return Polymer.CaseMap.dashToCamelCase(this.attrForValue);
+    },
+    
+    /**
+     * Returns a reference to the input element.
+     */
+    get _inputElement() {
+      return this.querySelector('paper-input.autocomplete-input, input.autocomplete-input');
+    },
+
+    get _inputElementValue() {
+      return this._inputElement[this._propertyForValue] || this._inputElement.value;
+    },
+    
+    /**
+     * Returns a reference to the menu element.
+     */
+    get _menuElement() {
+      return this.querySelector('paper-menu.autocomplete-suggestions');
+    },
+
+    // Element Behavior
+    /**
+     * Callback for keydown event
+     *
+     * @param {e} event
+     */
+    _keydown: function(e) {
+      var defaultPreventedKeyCodes = [
+        27, /* ESC */ 
+        40, 
+        38];
+      
+      if ((defaultPreventedKeyCodes.indexOf(e.which) >= 0) || (this._checkTokenAcceptKeyCode(e.which))) {
+         e.preventDefault();
+      }
+    },
+    /**
+     * Callback on mouse over event on paper-item
+     *
+     */
+    _onMouseOverSelectable: function(e) {
+      var suggestionsMenu = this._menuElement;
+      if (suggestionsMenu && typeof(suggestionsMenu) !== 'undefined'){
+        var selectedItem = e.currentTarget;
+        index = Number(suggestionsMenu.indexOf(selectedItem));
+        suggestionsMenu.select(index);
+        this._inputElement.focus();
+      }
+      else{
+        // console.log("suggestionsMenu not defined");
+      }
+    },
+    /**
+     * Callback on tap event on paper-item
+     *
+     */
+    _onTapSelectable: function(e) {
+      var suggestionsMenu = this._menuElement;
+      if (suggestionsMenu && typeof(suggestionsMenu) !== 'undefined'){
+        this._setSelectedItem(e.currentTarget);
+        e.stopPropagation();
+      }
+      else{
+        // console.log("suggestionsMenu not defined");
+      }
+    },
+    /**
+     * Callback for keyup event
+     *
+     * @param {e} event
+     */
+    _keyup: function(e) {
+      //console.debug('[_keyup]:', e);
+      if (e.which == 27) {
+        // ESC Key
+        this.inputValue = '';
+        
+        var searchTerm = this.inputValue || '';
+
+        this._checkIntegrityOfSelectedItem();        
+        
+        // if (this.inputValue.length >= 3){
+        this._search(searchTerm.trim());
+      } else if (e.which == 40){
+        // Down Key
+        // console.log("down");
+        var suggestionsMenu = this._menuElement;
+        var selectedItem = suggestionsMenu.focusedItem;
+        var index = 0;
+        if (typeof(selectedItem) !== 'undefined'){
+          index = Number(suggestionsMenu.indexOf(selectedItem));
+          index = Math.min(index + 1, this._suggestions.length - 1);
+        }
+        // console.log("index");
+        // console.log(index);
+        suggestionsMenu.select(index);
+        this._inputElement.focus();
+      } else if (e.which == 38){
+        // Up Key
+        var suggestionsMenu = this._menuElement;
+        var selectedItem = suggestionsMenu.focusedItem;
+        if (typeof(selectedItem) !== 'undefined'){
+          index = Number(suggestionsMenu.indexOf(selectedItem));
+          index = Math.max(index - 1, -1);
+          suggestionsMenu.select(index);
+        }
+        this._inputElement.focus();
+      } else if (this._checkTokenAcceptKeyCode(e.which)){
+        // Return Key
+        var suggestionsMenu = this._menuElement;
+        if (suggestionsMenu && typeof(suggestionsMenu) !== 'undefined'){
+          this._setSelectedItem(suggestionsMenu.focusedItem);
+        }
+      } else{
+        var suggestionsMenu = this._menuElement;
+        if (suggestionsMenu && typeof(suggestionsMenu) !== 'undefined'){
+          suggestionsMenu.select(-1);
+        }
+        
+        this._checkIntegrityOfSelectedItem();
+        
+        var searchTerm = this.inputValue || '';
+        
+        this._search(searchTerm.trim());
+      }
+    },
+    _checkIntegrityOfSelectedItem: function () {
+      
+        if ((this.selectedItem) &&
+            ((!this.inputValue) ||
+             (this.inputValue.trim() === '')||
+             (this.inputValue !== this.selectedItemText))) {
+          this._setSelectedItem(null);
+        }
+    },
+    _setSelectedItem: function (selectedItemElement) {
+      var suggestionsMenu = this._menuElement;
+
+      if (typeof(selectedItemElement) !== 'undefined') {
+        if (this.selectedItem !== selectedItemElement) {
+          
+          var selectedObject = null;
+          var selectedItemText = null;
+          
+          if (selectedItemElement !== null) {
+            index = Number(suggestionsMenu.indexOf(selectedItemElement));
+            
+            if (index >= 0) {
+              selectedObject = this._suggestions[index];
+              
+              selectedItemText = selectedObject.text;
+              this._suggestions = [];
+              this.inputValue = selectedItemText;
+            } else {
+              selectedItemElement = null;
+            }
+          }
+          
+          this.selectedItemText = selectedItemText;
+          this.selectedItem = selectedItemElement;
+          this.selectedObject = selectedObject;
+          
+          // console.log(this.selectedItem);
+        }       
+      } else if (this.allowSelectUnknownToken) {
+
+        if (!this.invalid) {
+          var selectedItemText = (this.inputValue) ? this.inputValue.trim() : null;
+  
+          if (selectedItemText) {
+            var selectedObject = {
+              key: this._generateObjectKey(selectedItemText),
+              text: selectedItemText
+            };
+            
+            this.selectedItemText = selectedItemText;
+            this.selectedObject = selectedObject;
+            this._suggestions = [];
+
+            if(this.xmlhttp){
+              this.xmlhttp.abort();
+            }
+          }
+        }
+      }
+    },
+    
+    _generateObjectKey: function (text) {
+      return 'dyn_' + this._strHashCode((text) ? text.toLowerCase() : '');
+    },
+    
+    _search: function(term){
+      var that = this;
+      this.xmlhttp;
+
+      this.debounce('search', function(){
+        if (term === ''){
+          this._suggestions = [];
+          return;
+        }
+
+        var patt =  new RegExp( this.scapeString( term.toLowerCase() ) );
+        var matched = [];
+
+        if ( this.localCandidates && this.localCandidates.length ){
+          for (var i = 0; i < this.localCandidates.length; i ++){
+            if (matched.length == this.maxSuggestions){
+              break;
+            }
+            if (patt.test(this.localCandidates[i].text.toLowerCase()) == true){
+              matched.push(this.localCandidates[i]);
+            }
+          }
+        }
+        
+        if (typeof(this._prefetchedCandidates) !== 'undefined'){
+          for (var i = 0; i < this._prefetchedCandidates.length; i ++){
+            if (matched.length == this.maxSuggestions){
+              break;
+            }
+            if (patt.test(this._prefetchedCandidates[i].toLowerCase()) == true){
+              matched.push(this._prefetchedCandidates[i]);
+            }
+          }
+        }
+
+        if ( this.remoteUrl ){
+          var url = this.remoteUrl.replace("%QUERY", term);
+
+          if(this.xmlhttp){
+            this.xmlhttp.abort();
+          }
+
+          this.xmlhttp = new XMLHttpRequest();
+          this.xmlhttp.open('GET', url, true);
+          this.xmlhttp.setRequestHeader("Content-type", "application/json");
+          this.xmlhttp.onreadystatechange = function() {
+            if (that.xmlhttp.readyState === 4 && that.xmlhttp.status === 200) {
+              var resp = that.xmlhttp.response;
+              var DATA = JSON.parse(resp);
+              var responseTreatment = that.fire('response-treatment', { response : DATA }, {cancelable: true});
+              var cuttedMatched = responseTreatment.detail.response.slice(0, that.maxSuggestions);
+
+              if (!responseTreatment.defaultPrevented) {
+
+                for(var i = 0; i < cuttedMatched.length; i++){
+                  cuttedMatched[i].key = that._generateObjectKey(cuttedMatched[i].text);
+                }
+
+                that._suggestions = matched.concat(cuttedMatched);
+              }
+            }
+          }
+          this.xmlhttp.send();
+        }
+        else{
+          this._suggestions = matched;
+        }
+      },250);
+    },
+    
+    scapeString: function(term){
+      var especialChars = ['\\.', '\\*', '\\+', '\\(', '\\)', '\\[', '\\]', '\\{', '\\}', '\\\\'];
+
+      for (var i=0, l=especialChars.length ; i<l ; i++) {
+        term = term.replace(new RegExp(especialChars[i], 'g'), especialChars[i] );
+      }
+
+      return term;
+    },
+
+    _strHashCode: function(strValue) {
+      var hash = 0, i, chr, len;
+      if (strValue.length === 0) return hash;
+      for (i = 0, len = strValue.length; i < len; i++) {
+        chr   = strValue.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+      }
+      return hash;
+    },
+    
+    _checkTokenAcceptKeyCode: function (keyCode) {
+      return (this.tokenAcceptKeyCodesArray.indexOf('' + keyCode + '') >= 0)
+    },
+  };
+  
+  WebPaperElem.InputAutoCompleteBehavior = [ 
+    Polymer.IronControlState,
+    WebPaperElem.InputAutoCompleteBehaviorImpl 
+  ];
+
+</script>
