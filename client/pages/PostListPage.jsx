@@ -11,7 +11,8 @@ PostListPage = React.createClass({
       <paper-header-panel className="flex">
         <AppBar />
         <div className="post-list">
-          <Post></Post>
+          <PostListControls />
+          <Post />
           <paper-card className="block">
             <div className="card-content">
               <h1>Todo List</h1>

@@ -3,7 +3,7 @@ PostForm = React.createClass({
   componentDidMount() {
     // Set up the WYSIWYG editor.
     tinymce.init({
-      selector: "#post-editor",
+      selector: ".post-editor",
       elementpath: false,
       menubar: false,
       statusbar: false,
@@ -25,16 +25,20 @@ PostForm = React.createClass({
     // Mark post button as initialy disabled.
     this.postButton.setAttribute("disabled", "");
   },
+
   handlePost(e) {
     // Handle clicking on the 'Post' button.
     console.log("Post", e);
     window.location = "/";
 //    window.location = '/search/'+this.state.query+'/some-action';
   },
+
   // Handle clicking on the 'Cancel' button.
   handleCancel(e) {
-    console.log("Cancel", e);
+    // TODO: Remove evil global.
+    window.HISTORY.push("/");
   },
+
   render() {
     return (
       <form className="post-form layout vertical fit">
@@ -47,8 +51,7 @@ PostForm = React.createClass({
             label="Post Title"
             ref={(el) => this.titleField = el}></paper-input>
         <textarea
-            id="post-editor"
-            className="post-form-field-body"></textarea>
+            className="post-editor post-form-field-body"></textarea>
         <div className="post-form-buttons layout horizontal end-justified">
           <paper-button
               class="post-form-cancel"

@@ -17,6 +17,20 @@ paper-card {
   margin-top: 12px;
 }
 
+paper-button[raised] {
+  background: $action-color;
+  color: $action-color-text;
+}
+
+paper-button[raised][disabled] {
+  background: $action-color-light;
+}
+
+paper-button[compact] {
+  padding: 8px 10px;
+  font-size: 90%;
+}
+
 // Demo only
 
 .post-image-1 {

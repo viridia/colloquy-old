@@ -4,10 +4,12 @@ AccountsUIWrapper = React.createClass({
     this.view = Blaze.renderWithData(Template.loginButtons, { align: "right" },
       ReactDOM.findDOMNode(this.refs.container));
   },
+
   componentWillUnmount() {
     // Clean up Blaze view
     Blaze.remove(this.view);
   },
+  
   render() {
     // Just render a placeholder container that will be filled in
     return <span ref="container" />;
