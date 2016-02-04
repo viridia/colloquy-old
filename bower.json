@@ -33,6 +33,7 @@
     "paper-menu-button": "PolymerElements/paper-menu-button#^1.0.4",
     "paper-item": "PolymerElements/paper-item#^1.1.3",
     "paper-input": "PolymerElements/paper-input#^1.1.5",
-    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.10"
+    "iron-autogrow-textarea": "PolymerElements/iron-autogrow-textarea#^1.0.10",
+    "paper-input-autocomplete-chips": "git@github.com:WebPaperElements/paper-input-autocomplete-chips.git#^0.22.6"
   }
 }
