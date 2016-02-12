@@ -12,7 +12,7 @@ PostForm = React.createClass({
       // Note: codesample doesn't work that well, possibly remove. I'd like
       // to be able to apply the style to existing text.
       toolbar: "undo redo | formatselect | " +
-               "bold italic underline strikethrough blockquote codesample removeformat | indent outdent | link image",
+               "bold italic underline strikethrough blockquote codesample removeformat | bullist numlist | link image",
       body_class: "post-editor-body",
       content_style: ".post-editor-body {font-size: 16px}",
       height: 300,
@@ -24,6 +24,52 @@ PostForm = React.createClass({
 
     // Mark post button as initialy disabled.
     this.postButton.setAttribute("disabled", "");
+
+    // Suggestion data for recipients field (temporary until we get remote suggestions working)
+    this.recipients.localCandidates = this.getSuggestions().states;
+  },
+
+  getSuggestions () {
+    return {
+      states: [
+        {
+          key: 1,
+          text: "Alabama",
+          tag: 'read-only',
+          readOnly: false
+        },
+        {
+          key: 2,
+          text: "Alaska",
+          imgUrl: 'http://lorempixel.com/256/256/'
+        },
+        {
+          key: 3,
+          text: "American Samoa",
+          imgUrl: 'http://lorempixel.com/200/200/sports/1/'
+        },
+        {
+          key: 4,
+          text: "Arizona",
+          imgUrl: 'http://lorempixel.com/256/256/'
+        },
+        {
+          key: 5,
+          text: "Arkansas",
+          imgUrl: null
+        },
+        {
+          key: 6,
+          text: "California",
+          imgUrl: 'http://lorempixel.com/256/256/'
+        },
+        {
+          key: 7,
+          text: "Colorado",
+          imgUrl: null
+        }
+      ]
+    }
   },
 
   handlePost(e) {
@@ -42,10 +88,13 @@ PostForm = React.createClass({
   render() {
     return (
       <form className="post-form layout vertical fit">
-        <paper-input
-            class="post-form-field-to"
+        <paper-input-autocomplete-chips
+            class="post-form-field-recipients"
             label="To:"
-            ref={(el) => this.toField = el}></paper-input>
+            max-suggestions="5"
+            placeholder="Recipients"
+            allow-select-unknown-token="true"
+            ref={(el) => this.recipients = el}></paper-input-autocomplete-chips>
         <paper-input
             class="post-form-field-title no-label-float"
             label="Post Title"
