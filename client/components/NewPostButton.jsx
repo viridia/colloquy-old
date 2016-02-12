@@ -12,9 +12,11 @@ NewPostButton = React.createClass({
     // Set up event listeners.
     const el = ReactDOM.findDOMNode(this);
     if (this.data.isLoggedIn) {
-      el.addEventListener('tap', this.navigateToPostPage);
+      console.log("componentDidMount - logged in")
+      el.addEventListener("tap", this.navigateToPostPage);
     } else {
-      el.addEventListener('tap', this.signIn);
+      console.log("componentDidMount - not logged in")
+      el.addEventListener("tap", this.signIn);
     }
   },
 

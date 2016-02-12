@@ -12,18 +12,20 @@ PostForm = React.createClass({
       // Note: codesample doesn't work that well, possibly remove. I'd like
       // to be able to apply the style to existing text.
       toolbar: "undo redo | formatselect | " +
-               "bold italic underline strikethrough blockquote codesample removeformat | bullist numlist | link image",
+               "bold italic underline strikethrough blockquote codesample removeformat | " +
+               "bullist numlist | link image",
       body_class: "post-editor-body",
       content_style: ".post-editor-body {font-size: 16px}",
       height: 300,
     });
 
     // Subscribe to polymer events.
-    this.postButton.addEventListener('tap', this.handlePost);
-    this.cancelButton.addEventListener('tap', this.handleCancel);
+    this.postButton.addEventListener("tap", this.handlePost);
+    this.saveButton.addEventListener("tap", this.handleSave);
+    this.cancelButton.addEventListener("tap", this.handleCancel);
 
     // Mark post button as initialy disabled.
-    this.postButton.setAttribute("disabled", "");
+    //this.postButton.setAttribute("disabled", "");
 
     // Suggestion data for recipients field (temporary until we get remote suggestions working)
     this.recipients.localCandidates = this.getSuggestions().states;
@@ -35,23 +37,23 @@ PostForm = React.createClass({
         {
           key: 1,
           text: "Alabama",
-          tag: 'read-only',
+          tag: "read-only",
           readOnly: false
         },
         {
           key: 2,
           text: "Alaska",
-          imgUrl: 'http://lorempixel.com/256/256/'
+          imgUrl: "http://lorempixel.com/256/256/"
         },
         {
           key: 3,
           text: "American Samoa",
-          imgUrl: 'http://lorempixel.com/200/200/sports/1/'
+          imgUrl: "http://lorempixel.com/200/200/sports/1/"
         },
         {
           key: 4,
           text: "Arizona",
-          imgUrl: 'http://lorempixel.com/256/256/'
+          imgUrl: "http://lorempixel.com/256/256/"
         },
         {
           key: 5,
@@ -61,7 +63,7 @@ PostForm = React.createClass({
         {
           key: 6,
           text: "California",
-          imgUrl: 'http://lorempixel.com/256/256/'
+          imgUrl: "http://lorempixel.com/256/256/"
         },
         {
           key: 7,
@@ -72,11 +74,35 @@ PostForm = React.createClass({
     }
   },
 
+  ensureValidPost() {
+    var msg = "";
+    if (this.recipients.selectedObjects.length == 0) {
+      msg = "Please enter at least once recipient.";
+    } else if (!this.titleField.value) {
+      msg = "Please enter a title for this post.";
+    }
+
+    if (msg) {
+      this.errorDialog.show(msg);
+      return false;
+    } else {
+      return true;
+    }
+  },
+
   handlePost(e) {
     // Handle clicking on the 'Post' button.
     console.log("Post", e);
-    window.location = "/";
-//    window.location = '/search/'+this.state.query+'/some-action';
+    if (this.ensureValidPost()) {
+      //    window.location = "/";
+    }
+  },
+
+  handleSave(e) {
+    // Handle clicking on the 'Post' button.
+    console.log("Post", e);
+    this.errorDialog.open();
+//    window.location = "/";
   },
 
   // Handle clicking on the 'Cancel' button.
@@ -107,8 +133,12 @@ PostForm = React.createClass({
               ref={(el) => this.cancelButton = el}>Cancel</paper-button>
           <paper-button raised
               class="post-form-submit"
+              ref={(el) => this.saveButton = el}>Save Draft</paper-button>
+          <paper-button raised
+              class="post-form-submit"
               ref={(el) => this.postButton = el}>Post</paper-button>
         </div>
+        <ErrorDialog ref={(el) => this.errorDialog = el} />
       </form>
     );
   }

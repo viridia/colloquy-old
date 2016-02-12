@@ -10,6 +10,7 @@
         "/components/paper-badge/paper-badge.html",
         "/components/paper-button/paper-button.html",
         "/components/paper-card/paper-card.html",
+        "/components/paper-dialog/paper-dialog.html",
         "/components/paper-header-panel/paper-header-panel.html",
         "/components/paper-icon-button/paper-icon-button.html",
         "/components/paper-input/paper-input.html",
