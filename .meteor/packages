@@ -28,3 +28,4 @@ accounts-google
 accounts-facebook
 accounts-twitter
 accounts-github
+cfs:http-methods

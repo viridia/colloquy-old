@@ -18,7 +18,9 @@ function requireAuth(nextState, replace) {
   }
 }
 
-// Routing table
+// Routing table. Note that there are additional routes in the server/api
+// folder that use HTTP.methods for RESTful APIs. Those routes all begin with
+// "/api/" so it should be easy to avoid conflicts.
 Routes = (
   <Router history={history}>
     <Route name="root" component={App} path="/">

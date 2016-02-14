@@ -22,3 +22,7 @@
 
 .post-editor {
 }
+
+paper-input-autocomplete-chips /deep/ paper-material.autocomplete-suggestion-container {
+  max-height: 280px;
+}

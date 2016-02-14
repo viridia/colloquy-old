@@ -2,10 +2,16 @@
 
 ## Next Steps
 
+* [In progress] Autocomplete remote URL.
 * Add user account stuff - login, etc.
 * What format are author ids?
 * Tests
 * Form submit handler
+
+## Bugs:
+
+* Figure out why TinyMCE is reporting a JS error.
+* Figure out why new post button doesn't work when we first log in.
 
 ## Future Steps
 
