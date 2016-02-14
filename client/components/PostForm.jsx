@@ -29,9 +29,67 @@ PostForm = React.createClass({
     //this.postButton.setAttribute("disabled", "");
 
     // Suggestion data for recipients field (temporary until we get remote suggestions working)
+    // TODO: Add api key (need to publish this).
     this.recipients.remoteUrl = "/api/recipients?q=%QUERY";
   },
 
+  // Handle clicking on the 'Post' button.
+  handlePost(e) {
+    this.submitPost(true);
+  },
+
+  // Handle clicking on the 'Save Draft' button.
+  handleSave(e) {
+    this.submitPost(false);
+  },
+
+  // Handle clicking on the 'Cancel' button.
+  handleCancel(e) {
+    // TODO: Remove evil global.
+    window.HISTORY.goBack();
+  },
+
+  // Submit the post to the server.
+  // @param publish If true, the post should be published to the recipients,
+  //     else it should only be saved as a draft. Has no effect if the post
+  //     has already been published.
+  submitPost(publish:bool) {
+    if (!this.ensureValidPost()) {
+      return;
+    }
+    // Process selected recipient objects into lists of recipient ids.
+    const recipientUsers = [];
+    const recipientChannels = [];
+    this.recipients.selectedObjects.forEach((r) => {
+      const [rtype, rkey] = r.tag.split(":");
+      if (rtype == "user") {
+        recipientUsers.push(rkey);
+      } else if (rtype == "channel") {
+        recipientChannels.push(rkey);
+      } else {
+        throw new Error("Invalid recipient type: " + rtype);
+      }
+    });
+
+    // TODO: Add post id if editing an existing post.
+    const post = {
+      recipientUsers: recipientUsers,
+      recipientChannels: recipientChannels,
+      title: this.titleField.value,
+      body: tinymce.activeEditor.getContent({format : 'raw'})
+    };
+
+    Meteor.call("post", post, publish, (error, result) => {
+      if (error) {
+        this.errorDialog.show(error.error);
+      } else {
+        // Navigate to previous page.
+        window.HISTORY.goBack();
+      }
+    });
+  },
+
+  // Check to make sure they have filled out the required fields.
   ensureValidPost() {
     var msg = "";
     if (this.recipients.selectedObjects.length == 0) {
@@ -46,27 +104,6 @@ PostForm = React.createClass({
     } else {
       return true;
     }
-  },
-
-  handlePost(e) {
-    // Handle clicking on the 'Post' button.
-    console.log("Post", e);
-    if (this.ensureValidPost()) {
-      //    window.location = "/";
-    }
-  },
-
-  handleSave(e) {
-    // Handle clicking on the 'Post' button.
-    console.log("Post", e);
-    this.errorDialog.open();
-//    window.location = "/";
-  },
-
-  // Handle clicking on the 'Cancel' button.
-  handleCancel(e) {
-    // TODO: Remove evil global.
-    window.HISTORY.push("/");
   },
 
   render() {

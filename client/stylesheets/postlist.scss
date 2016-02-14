@@ -1,7 +1,51 @@
-.post-list-controls {
+@import "colors.scss";
+
+h.post-list-controls {
   margin: 8px 0;
 }
 
 .new-post-button, .sign-in-button {
   margin-right: 0;
+}
+
+.post-summary-list {
+  width: 100%;
+  border-spacing: 0;
+  margin-top: 12px;
+}
+
+.post-summary-list th {
+  color: $secondary-text-color;
+  font-weight: normal;
+  padding: 8px;
+}
+
+.post-summary-list td {
+  padding: 8px;
+}
+
+.post-summary-list .topic,
+.post-summary-list .from,
+.post-summary-list .to {
+  text-align: left;
+}
+
+.post-summary-list td.topic {
+  width: 45%;
+  font-weight: bold;
+}
+
+.post-summary-list .from,
+.post-summary-list .to, {
+  width: 15%;
+}
+
+.post-summary-header th {
+  border-bottom: 2px solid #ddd;
+}
+
+.post-summary-list .replies,
+.post-summary-list .views,
+.post-summary-list .activity {
+  text-align: center;
 }

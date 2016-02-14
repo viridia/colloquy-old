@@ -2,11 +2,11 @@
 
 ## Next Steps
 
-* [In progress] Autocomplete remote URL.
 * Add user account stuff - login, etc.
 * What format are author ids?
 * Tests
 * Form submit handler
+* Publish the user's api key to the client, and then use in autocomplete.
 
 ## Bugs:
 
@@ -15,16 +15,13 @@
 
 ## Future Steps
 
-* Think about how to abstract collaborations
+* Think about how to hide MedBook collaborations behind an interface.
 * Figure out how to use flex sizing with TinyMCE.
 * Patch in menu bug fix and get menus working
-* Define collections schema
 * Architecture for notifications
 * Architecture for Badges
 * Create some dummy data
 * Add avatars
-* Remove insecure packages
-* Chips widget
 * Format Date intervals (6h ago, etc.)
 * Research:
   * HTML Stripping / Sanitization
@@ -33,6 +30,8 @@
 * Figure out how to set custom css properties in react files.
 * Need a much better account creation / login UI.
 * Implement the 'not found' page (NotFoundRoute).
+* Handle async uploading of images in TinyMCE.
+  * Including waiting for uploads to finish.
 
 ## Collections
 
@@ -48,8 +47,16 @@
 ## Server side app structure
 
 * Methods
-  * New Post
-  * Edit Post
+  * Posting
+    * Save Post
+      * Option: Save Draft (don't publish)
+      * Option: Edit Existing Post
+    * Delete Post
+    * Approve Post
+    * Unapprove Post
+    * Bump Post Views
+    * Bump Post Clicks
+
   * New Comment
   * Edit Comment
   * List Post Summaries (query)

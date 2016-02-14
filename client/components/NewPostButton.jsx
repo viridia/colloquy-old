@@ -10,24 +10,17 @@ NewPostButton = React.createClass({
 
   componentDidMount() {
     // Set up event listeners.
-    const el = ReactDOM.findDOMNode(this);
+    ReactDOM.findDOMNode(this).addEventListener("tap", this.handleTap);
+  },
+
+  handleTap() {
     if (this.data.isLoggedIn) {
-      console.log("componentDidMount - logged in")
-      el.addEventListener("tap", this.navigateToPostPage);
+      // TODO: Get rid of evil global here, unfortunately React is being
+      // highly uncooperative.
+      window.HISTORY.push("/post");
     } else {
-      console.log("componentDidMount - not logged in")
-      el.addEventListener("tap", this.signIn);
+      throw Error("Not implementd");
     }
-  },
-
-  navigateToPostPage() {
-    // TODO: Get rid of evil global here, unfortunately React is being
-    // highly uncooperative.
-    window.HISTORY.push("/post");
-  },
-
-  signIn() {
-    throw Error("Not implementd");
   },
 
   render() {

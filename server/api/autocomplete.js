@@ -7,6 +7,8 @@ function escapeRegExp(str) {
 HTTP.methods({
   'api/recipients': {
     get: function(data) {
+      // TODO: Re-enable this code once we publish the user's API key to the
+      // client.
       // if (!this.userId) {
       //   this.setStatusCode(401); // Unauthorized
       //   return "Unauthorized";
@@ -27,24 +29,28 @@ HTTP.methods({
       });
 
       // Search users
+      // TODO: Do we also want to search by other attributes such as email?
+      // Note that email isn't stored in one single location, it depends on
+      // how they logged in.
       const users = Meteor.users.find({
         "profile.name": { $regex: queryRegex }
       });
 
-      // Process the results.
+      // Process the results and produce a JSON object that is suitable for
+      // consumption by the polymer autocomplete widget.
       const channelResults = channels.map((ch) => {
         return {
-          key: ch._id,
           text: ch.name,
-          tag: "channel",
+          tag: "channel:" + ch._id,
 //          imgUrl: ??
         };
       });
       const userResults = users.map((u) => {
+        // TODO: Compute user avatars.
         return {
-          key: u._id,
           text: u.profile.name,
-          tag: "user",
+          tag: "user:" + u._id,
+          //          imgUrl: ??
         };
       });
       this.setContentType("application/json");

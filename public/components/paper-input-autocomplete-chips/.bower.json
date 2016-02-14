@@ -1,6 +1,6 @@
 {
   "name": "paper-input-autocomplete-chips",
-  "version": "0.22.6",
+  "version": "0.22.9",
   "authors": [
     "Vinicius Patrinhani <patrinhani@ciandt.com>"
   ],
@@ -37,11 +37,11 @@
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
     "web-component-tester": "*"
   },
-  "_release": "0.22.6",
+  "_release": "0.22.9",
   "_resolution": {
     "type": "version",
-    "tag": "0.22.6",
-    "commit": "df8202d583987c196092539df4a322c350a1f15a"
+    "tag": "0.22.9",
+    "commit": "e1116c024d77076bff1683f0481d12891bafd421"
   },
   "_source": "git@github.com:WebPaperElements/paper-input-autocomplete-chips.git",
   "_target": "^0.22.6",

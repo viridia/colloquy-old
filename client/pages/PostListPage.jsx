@@ -3,7 +3,12 @@ PostListPage = React.createClass({
   mixins: [ReactMeteorData],
 
   getMeteorData () {
-    return {}
+    var data = { posts: [] };
+    var handle = Meteor.subscribe("posts");
+    if (handle.ready()) {
+      data.posts = Posts.find({});
+    }
+    return data;
   },
 
   handleClick: function() {
@@ -19,13 +24,29 @@ PostListPage = React.createClass({
         <AppBar />
         <div className="post-list">
           <PostListControls />
+          <table className="post-summary-list" border="0">
+            <tbody>
+              <tr className="post-summary-header">
+                <th className="topic">Topic</th>
+                <th className="from">From</th>
+                <th className="to">To</th>
+                <th className="replies">Replies</th>
+                <th className="views">Views</th>
+                <th className="activity">Activity</th>
+              </tr>
+              {this.data.posts.map( (post, index) => {
+                return (<tr className="post-summary-data" key={post._id}>
+                  <td className="topic">{post.title}</td>
+                  <td className="from">{post.authorName}</td>
+                  <td className="to">(t)</td>
+                  <td className="replies">{post.commentCount}</td>
+                  <td className="views">{post.viewCount}</td>
+                  <td className="activity">(act)</td>
+                </tr>)
+              })}
+            </tbody>
+          </table>
           <Post />
-          <paper-card className="block">
-            <div className="card-content">
-              <h1>Todo List</h1>
-              <paper-button raised onClick={this.handleClick}>Button</paper-button>
-            </div>
-          </paper-card>
         </div>
       </paper-header-panel>
     );
