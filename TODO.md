@@ -3,7 +3,13 @@
 ## Next Steps
 
 * Single post page.
+  * Post age.
+  * Comment entry
+  * Comment display
+  * Attachments
+  * Embedding
 * Add avatars
+  * We might have to do it ourselves.
 * Add user account stuff - login, etc.
 * Tests
 * Publish the user's api key to the client, and then use in autocomplete.

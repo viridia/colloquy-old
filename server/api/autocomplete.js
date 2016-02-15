@@ -33,7 +33,10 @@ HTTP.methods({
       // Note that email isn't stored in one single location, it depends on
       // how they logged in.
       const users = Meteor.users.find({
-        "profile.name": { $regex: queryRegex, $options: "i" }
+        $or: [
+          { "username": { $regex: queryRegex, $options: "i" } },
+          { "profile.name": { $regex: queryRegex, $options: "i" } }
+        ]
       });
 
       // Process the results and produce a JSON object that is suitable for
@@ -46,11 +49,12 @@ HTTP.methods({
         };
       });
       const userResults = users.map((u) => {
-        // TODO: Compute user avatars.
         return {
-          text: u.profile.name,
+          // TODO: Write a function to get the user's name, which might be
+          // stored in several locations.
+          text: u.profile && u.profile.name ? u.profile.name : u.username,
           tag: "user:" + u._id,
-          //          imgUrl: ??
+          imgUrl: u.profile.avatarUrl,
         };
       });
       this.setContentType("application/json");

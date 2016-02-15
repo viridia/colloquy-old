@@ -10,13 +10,17 @@ Post = React.createClass({
       comments: []
     };
 
-    var handle = Meteor.subscribe("posts");
-    if (handle.ready()) {
+    var postsHandle = Meteor.subscribe("posts");
+    var usersHandle = Meteor.subscribe("users");
+    if (postsHandle.ready()) {
       const post = Posts.findOne({ slug: this.props.postId });
       if (post) {
         data.authorName = post.authorName;
         data.title = post.title;
         data.body = post.body;
+        if (usersHandle.ready()) {
+          data.author = Meteor.users.findOne({ _id: post.authorId });
+        }
       }
     }
     return data;
@@ -61,11 +65,20 @@ Post = React.createClass({
     return <Comment comment={comment} key={index}></Comment>
   },
 
+  renderAuthorAvatar() {
+    if (this.data.author) {
+      return <img className="post-author-avatar"
+        src={Avatar.getUrl(this.data.author)}></img>
+    } else {
+      <div className="post-author-avatar"></div>
+    }
+  },
+
   render() {
     return (
       <paper-card>
         <div className="card-content post layout horizontal">
-          <div className="post-author-avatar"></div>
+          {this.renderAuthorAvatar()}
           <div className="post-content flex">
             <div className="post-info layout horizontal">
               <div className="post-author">{this.data.authorName}</div>
