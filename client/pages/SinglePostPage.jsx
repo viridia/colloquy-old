@@ -1,23 +1,11 @@
 // A Page showing a single post
 SinglePostPage = React.createClass({
-  mixins: [ReactMeteorData],
-
-  getMeteorData () {
-    return {}
-  },
-
   render() {
     return (
       <paper-header-panel className="flex">
         <AppBar />
         <div className="post-list">
-          <Post></Post>
-          <paper-card className="block">
-            <div className="card-content">
-              <h1>Todo List</h1>
-              <paper-button raised>Button</paper-button>
-            </div>
-          </paper-card>
+          <Post postId={this.props.params.postId}></Post>
         </div>
       </paper-header-panel>
     );

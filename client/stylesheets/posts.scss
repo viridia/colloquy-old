@@ -1,3 +1,5 @@
+@import "colors.scss";
+
 .post-list {
   padding: 4px 8px 4px 8px;
 }
@@ -20,6 +22,11 @@
 
 .post-author {
   font-weight: bold;
+}
+
+.post-title {
+  font-weight: bold;
+  color: $secondary-text-color;
 }
 
 .post-visibility {

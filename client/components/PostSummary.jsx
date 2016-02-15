@@ -6,7 +6,7 @@ PostSummary = React.createClass({
     const post = this.props.post;
     return (<tr className="post-summary-data" key={this.props.key}>
       <td className="topic">
-        <Link to={"/post/" + post.slug} className="topic-link">
+        <Link to={"/single/" + post.slug} className="topic-link">
           {post.title}
         </Link>
       </td>

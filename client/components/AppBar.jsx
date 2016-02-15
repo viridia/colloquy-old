@@ -4,6 +4,8 @@ AppBar = React.createClass({
     return (
       <paper-toolbar>
         <paper-icon-button icon="menu"></paper-icon-button>
+        {this.props.showBackButton ?
+            <paper-icon-button icon="arrow-back"></paper-icon-button> : ''}
         <div className="flex"><span className="title">MedBook</span> | Dogfooders Forum</div>
         <AccountsUIWrapper />
         <div>

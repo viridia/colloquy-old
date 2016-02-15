@@ -25,6 +25,7 @@ Routes = (
   <Router history={history}>
     <Route name="root" component={App} path="/">
       <Route component={PostEditPage} path="/post" onEnter={requireAuth} />
+      <Route component={SinglePostPage} path="/single/:postId" />
       <IndexRoute component={PostListPage} />
     </Route>
   </Router>);

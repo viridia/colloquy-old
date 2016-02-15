@@ -31,9 +31,7 @@
 
 * Posts
 * Comments
-* Categories
-* Users / Accounts
-* UserRef
+* Categories / Channels
 * Settings
   * Include Badges and Post Read Markers
 * Notifications
