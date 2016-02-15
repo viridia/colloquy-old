@@ -2,16 +2,15 @@
 
 ## Next Steps
 
+* Single post page.
+* Add avatars
 * Add user account stuff - login, etc.
-* What format are author ids?
 * Tests
-* Form submit handler
 * Publish the user's api key to the client, and then use in autocomplete.
 
 ## Bugs:
 
 * Figure out why TinyMCE is reporting a JS error.
-* Figure out why new post button doesn't work when we first log in.
 
 ## Future Steps
 
@@ -20,13 +19,8 @@
 * Patch in menu bug fix and get menus working
 * Architecture for notifications
 * Architecture for Badges
-* Create some dummy data
-* Add avatars
 * Format Date intervals (6h ago, etc.)
-* Research:
-  * HTML Stripping / Sanitization
 * Do we want to use an issue tracker instead of this file?
-* Create color definitions for primary buttons
 * Figure out how to set custom css properties in react files.
 * Need a much better account creation / login UI.
 * Implement the 'not found' page (NotFoundRoute).
