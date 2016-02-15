@@ -6,7 +6,7 @@ PostListPage = React.createClass({
     var data = { posts: [] };
     var handle = Meteor.subscribe("posts");
     if (handle.ready()) {
-      data.posts = Posts.find({});
+      data.posts = Posts.find({}).fetch();
     }
     return data;
   },
@@ -35,14 +35,7 @@ PostListPage = React.createClass({
                 <th className="activity">Activity</th>
               </tr>
               {this.data.posts.map( (post, index) => {
-                return (<tr className="post-summary-data" key={post._id}>
-                  <td className="topic">{post.title}</td>
-                  <td className="from">{post.authorName}</td>
-                  <td className="to">(t)</td>
-                  <td className="replies">{post.commentCount}</td>
-                  <td className="views">{post.viewCount}</td>
-                  <td className="activity">(act)</td>
-                </tr>)
+                return <PostSummary post={post} key={post._id} />;
               })}
             </tbody>
           </table>

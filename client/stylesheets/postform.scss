@@ -26,3 +26,9 @@
 paper-input-autocomplete-chips /deep/ paper-material.autocomplete-suggestion-container {
   max-height: 280px;
 }
+
+// Make the background of chips representing channels a different color.
+// Doesn't work for some reason.
+// paper-input-autocomplete-chips::shadow paper-chip[data-tag^="channel"] .main-container {
+//   background-color: #ccddcc;
+// }

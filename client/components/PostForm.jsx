@@ -28,8 +28,12 @@ PostForm = React.createClass({
     // Mark post button as initialy disabled.
     //this.postButton.setAttribute("disabled", "");
 
-    // Suggestion data for recipients field (temporary until we get remote suggestions working)
     // TODO: Add api key (need to publish this).
+
+    // A/c widget doesn't have a 'clear' function.
+    // while (this.recipients.selectedObjects) {
+    //   this.recipients.removeSelectedObjectByIndex(0);
+    // }
     this.recipients.remoteUrl = "/api/recipients?q=%QUERY";
   },
 

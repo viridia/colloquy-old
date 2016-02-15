@@ -25,7 +25,7 @@ HTTP.methods({
       // Search channels
       // TODO: We only want to search channels the user can post to.
       const channels = Channels.find({
-        name: { $regex: queryRegex }
+        name: { $regex: queryRegex, $options: "i" }
       });
 
       // Search users
@@ -33,7 +33,7 @@ HTTP.methods({
       // Note that email isn't stored in one single location, it depends on
       // how they logged in.
       const users = Meteor.users.find({
-        "profile.name": { $regex: queryRegex }
+        "profile.name": { $regex: queryRegex, $options: "i" }
       });
 
       // Process the results and produce a JSON object that is suitable for

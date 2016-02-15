@@ -31,6 +31,7 @@ h.post-list-controls {
 }
 
 .post-summary-list td.topic {
+  color: $primary-text-color;
   width: 45%;
   font-weight: bold;
 }
@@ -48,4 +49,10 @@ h.post-list-controls {
 .post-summary-list .views,
 .post-summary-list .activity {
   text-align: center;
+}
+
+.post-summary-list .topic-link {
+  color: $primary-text-color;
+  display: block;
+  text-decoration: none;
 }
