@@ -4,6 +4,7 @@ Post = React.createClass({
 
   getMeteorData () {
     var data = {
+      authorId: "",
       authorName: "",
       title: "",
       body: "",
@@ -15,6 +16,7 @@ Post = React.createClass({
     if (postsHandle.ready()) {
       const post = Posts.findOne({ slug: this.props.postId });
       if (post) {
+        data.authorId = post.authorId;
         data.authorName = post.authorName;
         data.title = post.title;
         data.body = post.body;
@@ -65,20 +67,11 @@ Post = React.createClass({
     return <Comment comment={comment} key={index}></Comment>
   },
 
-  renderAuthorAvatar() {
-    if (this.data.author) {
-      return <img className="post-author-avatar"
-        src={Avatar.getUrl(this.data.author)}></img>
-    } else {
-      <div className="post-author-avatar"></div>
-    }
-  },
-
   render() {
     return (
       <paper-card>
         <div className="card-content post layout horizontal">
-          {this.renderAuthorAvatar()}
+          <Avatar userId={this.data.authorId} className="post-author-avatar" />
           <div className="post-content flex">
             <div className="post-info layout horizontal">
               <div className="post-author">{this.data.authorName}</div>

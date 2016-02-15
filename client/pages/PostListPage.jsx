@@ -39,7 +39,6 @@ PostListPage = React.createClass({
               })}
             </tbody>
           </table>
-          <Post />
         </div>
       </paper-header-panel>
     );
