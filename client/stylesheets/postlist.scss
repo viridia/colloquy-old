@@ -21,24 +21,40 @@
 }
 
 .post-summary-list td {
-  padding: 8px;
+  padding: 4px 8px;
 }
 
 .post-summary-list .topic,
-.post-summary-list .from,
 .post-summary-list .to {
   text-align: left;
 }
 
 .post-summary-list td.topic {
-  color: $primary-text-color;
-  width: 45%;
-  font-weight: bold;
+  color: $secondary-text-color;
+  max-width: 55%;
 }
 
-.post-summary-list .from,
+.post-summary-list .author {
+  color: $primary-text-color;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.post-summary-list .author-sep {
+  color: $secondary-text-color;
+  margin: 0 6px 0 6px;
+}
+
+.post-summary-list .topic-link {
+  color: $primary-text-color;
+  display: block;
+  text-decoration: none;
+  margin-top: 6px;
+}
+
 .post-summary-list .to, {
-  width: 15%;
+  white-space: nowrap;
+  width: 10%;
 }
 
 .post-summary-header th {
@@ -48,13 +64,8 @@
 .post-summary-list .replies,
 .post-summary-list .views,
 .post-summary-list .activity {
+  color: $secondary-text-color;
   text-align: center;
-}
-
-.post-summary-list .topic-link {
-  color: $primary-text-color;
-  display: block;
-  text-decoration: none;
 }
 
 // Responsive UI: Hide columns if window is narrow.

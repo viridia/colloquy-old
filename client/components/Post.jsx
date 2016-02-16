@@ -20,6 +20,7 @@ Post = React.createClass({
         data.authorName = post.authorName;
         data.title = post.title;
         data.body = post.body;
+        data.age = humanizeAge(post.editedAt);
         if (usersHandle.ready()) {
           data.author = Meteor.users.findOne({ _id: post.authorId });
         }
@@ -28,7 +29,6 @@ Post = React.createClass({
     return data;
 
     // return {
-    //   age: "6h",
     //   comments: [
     //     {
     //       authorName: "Tasha",

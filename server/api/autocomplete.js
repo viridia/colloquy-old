@@ -50,9 +50,7 @@ HTTP.methods({
       });
       const userResults = users.map((u) => {
         return {
-          // TODO: Write a function to get the user's name, which might be
-          // stored in several locations.
-          text: u.profile && u.profile.name ? u.profile.name : u.username,
+          text: u.profile.name,
           tag: "user:" + u._id,
           imgUrl: u.profile.avatarUrl,
         };

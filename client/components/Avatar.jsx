@@ -4,11 +4,25 @@ Avatar = React.createClass({
 
   getMeteorData () {
     var data = {};
-    var handle = Meteor.subscribe("users");
-    if (handle.ready()) {
-      const user = Meteor.users.findOne({ _id: this.props.userId });
-      if (user && user.profile) {
-        data.avatarUrl = user.profile.avatarUrl;
+    if (this.props.userId) {
+      // It's an avatar for a user.
+      var handle = Meteor.subscribe("users");
+      if (handle.ready()) {
+        const user = Meteor.users.findOne({ _id: this.props.userId });
+        if (user && user.profile) {
+          data.avatarUrl = user.profile.avatarUrl;
+          data.title = user.profile.name;
+        }
+      }
+    } else if (this.props.channelId) {
+      // It's an avatar for a channel.
+      var handle = Meteor.subscribe("channels");
+      if (handle.ready()) {
+        const channel = Channels.findOne({ _id: this.props.channelId });
+        if (channel) {
+          //data.avatarUrl = user.profile.avatarUrl;
+          data.title = channel.name;
+        }
       }
     }
     return data;
@@ -17,10 +31,12 @@ Avatar = React.createClass({
   render() {
     if (this.data.avatarUrl) {
       return (<img className={"avatar " + this.props.className}
-          src={this.data.avatarUrl}></img>);
+          src={this.data.avatarUrl}
+          title={this.data.title}></img>);
     } else {
       return (<div
-          className={"avatar-placeholder" + this.props.className}></div>);
+          className={"avatar-placeholder " + this.props.className}
+          title={this.data.title}></div>);
     }
   }
 });

@@ -2,8 +2,11 @@
 
 ## Next Steps
 
+* Change 'editedAt' field to 'lastTouched?'. We want to know when was the most
+  recent edit or commment.
+* Publish channels to the client (right now two independent collections).
+* Generate initials for channel avatars.
 * Single post page.
-  * Post age.
   * Comment entry
   * Comment display
   * Attachments
@@ -11,6 +14,7 @@
 * Add user account stuff - login, etc.
 * Tests
 * Publish the user's api key to the client, and then use in autocomplete.
+* Do we want to prevent chips from accepting invalid names?
 
 ## Bugs:
 
@@ -23,9 +27,9 @@
 * Patch in menu bug fix and get menus working
 * Architecture for notifications
 * Architecture for Badges
-* Format Date intervals (6h ago, etc.)
 * Do we want to use an issue tracker instead of this file?
 * Figure out how to set custom css properties in react files.
+  * The notification badge is a good test example.
 * Need a much better account creation / login UI.
 * Implement the 'not found' page (NotFoundRoute).
 * Put the user's avatar in the app bar. (Requires learning details of
@@ -37,7 +41,7 @@
 
 * Posts
 * Comments
-* Categories / Channels
+* Channels
 * Settings
   * Include Badges and Post Read Markers
 * Notifications
