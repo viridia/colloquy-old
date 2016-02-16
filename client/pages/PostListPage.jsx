@@ -11,13 +11,6 @@ PostListPage = React.createClass({
     return data;
   },
 
-  handleClick: function() {
-    // Explicitly focus the text input using the raw DOM API.
-    if (this.autoCompleteInput !== null) {
-      console.debug('sutocomplete selected objects: ', this.autoCompleteInput.selectedObjects);
-    }
-  },
-
   render() {
     return (
       <paper-header-panel className="flex">

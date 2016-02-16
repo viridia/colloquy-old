@@ -56,3 +56,22 @@
   display: block;
   text-decoration: none;
 }
+
+// Responsive UI: Hide columns if window is narrow.
+@media (max-width: 700px) {
+  .post-summary-list .views {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .post-summary-list .replies {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+  .post-summary-list .activity {
+    display: none;
+  }
+}

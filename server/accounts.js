@@ -7,7 +7,8 @@ Accounts.onCreateUser(function(options, user) {
 Accounts.onLogin(function(info) {
   // Note we don't use shortcut || operator here.
   const url = Avatar.getUrl(info.user);
-  if (!info.user.profile || !info.user.profile.avatarUrl) {
+  // Update the avatar url for this user.
+  if (!info.user.profile || info.user.profile.avatarUrl != url) {
     Meteor.users.update(Meteor.userId(), {$set: {"profile.avatarUrl": url}});
   }
   return true;

@@ -8,8 +8,6 @@
   * Comment display
   * Attachments
   * Embedding
-* Add avatars
-  * We might have to do it ourselves.
 * Add user account stuff - login, etc.
 * Tests
 * Publish the user's api key to the client, and then use in autocomplete.
@@ -30,6 +28,8 @@
 * Figure out how to set custom css properties in react files.
 * Need a much better account creation / login UI.
 * Implement the 'not found' page (NotFoundRoute).
+* Put the user's avatar in the app bar. (Requires learning details of
+  Meteor accounts ui buttons.)
 * Handle async uploading of images in TinyMCE.
   * Including waiting for uploads to finish.
 
