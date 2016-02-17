@@ -65,3 +65,7 @@
 .post-buttons paper-icon-button {
   color: $light-text-color;
 }
+
+.like-button[active] {
+  color: $like-button-color;
+}

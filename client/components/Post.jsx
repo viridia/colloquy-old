@@ -8,6 +8,7 @@ Post = React.createClass({
         authorId: '',
         title: '',
         body: '',
+        liked: false,
       },
       comments: []
     };
@@ -15,9 +16,11 @@ Post = React.createClass({
     var postsHandle = Meteor.subscribe('post', this.props.postId);
     if (postsHandle.ready()) {
       const post = Posts.findOne({ slug: this.props.postId });
+      const userId = Meteor.userId();
       if (post) {
         data.post = post;
         data.age = humanizedAge(post.editedAt);
+        data.isLiked = _.contains(post.likes, userId);
         // Update the view count if the post id changed.
         if (Session.get('prevPost') != this.props.postId) {
           Session.set('prevPost', this.props.postId);
@@ -49,7 +52,11 @@ Post = React.createClass({
   },
 
   handleLike() {
-    console.log('Like');
+    if (this.data.isLiked) {
+      Meteor.call('unlike', this.data.post._id);
+    } else {
+      Meteor.call('like', this.data.post._id);
+    }
   },
 
   handleReply() {
@@ -58,6 +65,18 @@ Post = React.createClass({
 
   renderBodyHTML() {
     return { __html: this.data.post.body };
+  },
+
+  renderLikeButton() {
+    // Polymer needs the 'active' attribute to be completely gone, but React only auto-removes
+    // falsy attributes if they are native.
+    if (this.data.isLiked) {
+      return (<paper-icon-button class='like-button' icon='favorite' toggles active
+          on-tap="handleLike"></paper-icon-button>);
+    } else {
+      return (<paper-icon-button class='like-button' icon='favorite' toggles
+          on-tap="handleLike"></paper-icon-button>);
+    }
   },
 
   renderEditButton() {
@@ -120,8 +139,7 @@ Post = React.createClass({
         </div>
         {this.renderComments()}
         <div className='post-buttons layout horizontal end-justified'>
-          <paper-icon-button icon='favorite'
-              on-tap="handleLike"></paper-icon-button>
+          {this.renderLikeButton()}
           {this.renderEditButton()}
           {this.renderDeleteButton()}
           <paper-button on-tap="handleReply">
