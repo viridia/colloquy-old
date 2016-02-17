@@ -1,0 +1,13 @@
+@import "colors.scss";
+
+.post-comment-form {
+  border-top: 1px solid $light-divider-color;
+}
+
+.post-comment-form paper-icon-button {
+  color: $light-text-color;
+}
+
+.post-comment-input {
+  outline: none !important; /* Override TinyMCE style. */
+}

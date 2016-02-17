@@ -43,6 +43,10 @@ Post = React.createClass({
     // }
   },
 
+  getInitialState: function() {
+    return { showCommentForm: false };
+  },
+
   handleEdit() {
     window.HISTORY.push("/post/" + this.data.post.slug);
   },
@@ -60,7 +64,15 @@ Post = React.createClass({
   },
 
   handleReply() {
-    console.log('Reply');
+    this.setState({ showCommentForm: true });
+  },
+
+  handleCloseComment() {
+    this.setState({ showCommentForm: false });
+  },
+
+  handleAddReply() {
+    console.log('add reply');
   },
 
   renderBodyHTML() {
@@ -138,7 +150,7 @@ Post = React.createClass({
           <div className='post-image-4'></div>
         </div>
         {this.renderComments()}
-        <div className='post-buttons layout horizontal end-justified'>
+        <div className='post-buttons layout horizontal end-justified center'>
           {this.renderLikeButton()}
           {this.renderEditButton()}
           {this.renderDeleteButton()}
@@ -147,12 +159,8 @@ Post = React.createClass({
             Reply
           </paper-button>
         </div>
-        <div className='post-comment-form layout horizontal'>
-          <iron-autogrow-textarea
-              class='post-comment-input flex self-center'
-              placeholder='Write a reply...'></iron-autogrow-textarea>
-            <paper-button >Reply</paper-button>
-        </div>
+        {this.state.showCommentForm ?
+            <CommentForm postId={this.data.post._id} onClose={this.handleCloseComment} /> : ''}
       </paper-card>
     );
   }
