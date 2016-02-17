@@ -6,6 +6,7 @@
         "/components/iron-flex-layout/iron-flex-layout.html",
         "/components/iron-flex-layout/classes/iron-flex-layout.html",
         "/components/iron-icons/iron-icons.html",
+        "/components/iron-icons/editor-icons.html",
         "/components/iron-icons/social-icons.html",
         "/components/paper-badge/paper-badge.html",
         "/components/paper-button/paper-button.html",

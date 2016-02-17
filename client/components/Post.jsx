@@ -4,26 +4,16 @@ Post = React.createClass({
 
   getMeteorData () {
     var data = {
-      authorId: "",
-      authorName: "",
-      title: "",
-      body: "",
+      title: '',
       comments: []
     };
 
-    var postsHandle = Meteor.subscribe("posts");
-    var usersHandle = Meteor.subscribe("users");
+    var postsHandle = Meteor.subscribe('post', this.props.postId);
     if (postsHandle.ready()) {
       const post = Posts.findOne({ slug: this.props.postId });
       if (post) {
-        data.authorId = post.authorId;
-        data.authorName = post.authorName;
-        data.title = post.title;
-        data.body = post.body;
-        data.age = humanizeAge(post.editedAt);
-        if (usersHandle.ready()) {
-          data.author = Meteor.users.findOne({ _id: post.authorId });
-        }
+        data.post = post;
+        data.age = humanizedAge(post.editedAt);
       }
     }
     return data;
@@ -31,31 +21,48 @@ Post = React.createClass({
     // return {
     //   comments: [
     //     {
-    //       authorName: "Tasha",
-    //       age: "2h",
-    //       body: "Lorem ipsum dolor sit amet, aliquam bibendum ultricies. " +
-    //             "In lorem magna adipiscing integer, nec tellus molestie neque " +
-    //             "risus vehicula."
-    //     },
-    //     {
-    //       authorName: "Ted Goldstein",
-    //       age: "20m",
-    //       body: "Praesent rhoncus, egestas est scelerisque suspendisse, " +
-    //             "lacus donec vel volutpat eu morbi mi, adipiscing et sapien " +
-    //             "nullam magna sint maecenas, excepturi non bibendum mi in."
+    //       authorName: 'Tasha',
+    //       age: '2h',
+    //       body: 'Lorem ipsum dolor sit amet, aliquam bibendum ultricies. ' +
+    //             'In lorem magna adipiscing integer, nec tellus molestie neque ' +
+    //             'risus vehicula.'
     //     },
     //   ]
     // }
   },
 
+  handleEdit() {
+    console.log('Edit');
+  },
+
+  handleDelete() {
+    console.log('Delete');
+  },
+
   renderBodyHTML() {
-    return { __html: this.data.body };
+    return { __html: this.data.post.body };
+  },
+
+  renderEditButton() {
+    if (this.data.post && canEditPost(this.data.post)) {
+      return <paper-icon-button icon='create' onTap={this.handleEdit}></paper-icon-button>
+    } else {
+      return '';
+    }
+  },
+
+  renderDeleteButton() {
+    if (this.data.post && canEditPost(this.data.post)) {
+      return <paper-icon-button icon='delete' onTap={this.handleDelete}></paper-icon-button>
+    } else {
+      return '';
+    }
   },
 
   renderComments() {
     if (this.data.comments.length > 0) {
       return (
-        <div className="post-comments">
+        <div className='post-comments'>
           {this.data.comments.map(this.renderComment)}
         </div>);
     } else {
@@ -68,35 +75,47 @@ Post = React.createClass({
   },
 
   render() {
+    if (!this.data.post) {
+      return <div></div>
+    }
     return (
       <paper-card>
-        <div className="card-content post layout horizontal">
-          <Avatar userId={this.data.authorId} className="post-author-avatar" />
-          <div className="post-content flex">
-            <div className="post-info layout horizontal">
-              <div className="post-author">{this.data.authorName}</div>
+        <div className='card-content post layout horizontal'>
+          <Avatar userId={this.data.post.authorId} className='post-author-avatar' />
+          <div className='post-content flex'>
+            <div className='post-info layout horizontal'>
+              <div className='post-author'>{this.data.post.authorName}</div>
               &nbsp;-&nbsp;
-              <div className="post-title">{this.data.title}</div>
+              <div className='post-title'>{this.data.post.title}</div>
               &nbsp;&raquo;&nbsp;
-              <div className="post-visibility flex">Public</div>
-              <div className="post-age">{this.data.age}</div>
+              <div className='post-visibility flex'>Public</div>
+              <div className='post-age'>{this.data.age}</div>
             </div>
-            <div className="post-body"
+            <div className='post-body'
                 dangerouslySetInnerHTML={this.renderBodyHTML()}></div>
           </div>
         </div>
-        <div className="post-attachments layout horizontal wrap">
-          <div className="post-image-1"></div>
-          <div className="post-image-2"></div>
-          <div className="post-image-3"></div>
-          <div className="post-image-4"></div>
+        <div className='post-attachments layout horizontal wrap'>
+          <div className='post-image-1'></div>
+          <div className='post-image-2'></div>
+          <div className='post-image-3'></div>
+          <div className='post-image-4'></div>
         </div>
         {this.renderComments()}
-        <div className="post-comment-form layout horizontal">
+        <div className='post-buttons layout horizontal end-justified'>
+          <paper-icon-button icon='favorite'></paper-icon-button>
+          {this.renderEditButton()}
+          {this.renderDeleteButton()}
+          <paper-button>
+            <iron-icon icon='reply'></iron-icon>
+            Reply
+          </paper-button>
+        </div>
+        <div className='post-comment-form layout horizontal'>
           <iron-autogrow-textarea
-              class="post-comment-input flex self-center"
-              placeholder="Add a comment..."></iron-autogrow-textarea>
-          <paper-button >Post</paper-button>
+              class='post-comment-input flex self-center'
+              placeholder='Write a reply...'></iron-autogrow-textarea>
+            <paper-button >Reply</paper-button>
         </div>
       </paper-card>
     );

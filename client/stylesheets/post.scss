@@ -1,12 +1,5 @@
 @import "colors.scss";
 
-.post-list {
-  padding: 4px 8px 4px 8px;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .post-author-avatar {
   background-color: #ccd;
   border-radius: 50%;
@@ -66,4 +59,9 @@
   font-size: 16px;
   width: auto;
   margin-left: 16px;
+}
+
+.post-buttons paper-button,
+.post-buttons paper-icon-button {
+  color: $light-text-color;
 }
