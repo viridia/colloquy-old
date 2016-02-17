@@ -18,6 +18,11 @@ Post = React.createClass({
       if (post) {
         data.post = post;
         data.age = humanizedAge(post.editedAt);
+        // Update the view count if the post id changed.
+        if (Session.get('prevPost') != this.props.postId) {
+          Session.set('prevPost', this.props.postId);
+          Meteor.call('view', post._id);
+        }
       }
     }
     return data;
