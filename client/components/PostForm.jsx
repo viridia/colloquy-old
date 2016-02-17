@@ -1,32 +1,29 @@
 // Form for editing a post
 PostForm = React.createClass({
+  mixins: [PolymerEventListener],
+
   componentDidMount() {
     // Set up the WYSIWYG editor.
     tinymce.init({
-      selector: ".post-editor",
+      selector: '.post-editor',
       elementpath: false,
       menubar: false,
       statusbar: false,
       resize: false,
-      plugins: "link image codesample imagetools",
+      plugins: 'link image codesample imagetools',
       // Note: codesample doesn't work that well, possibly remove. I'd like
       // to be able to apply the style to existing text.
-      toolbar: "undo redo | formatselect | " +
-               "bold italic underline strikethrough blockquote codesample removeformat | " +
-               "bullist numlist | " +
-               "link image",
-      body_class: "post-editor-body",
-      content_style: ".post-editor-body {font-size: 16px}",
+      toolbar: 'undo redo | formatselect | ' +
+               'bold italic underline strikethrough blockquote codesample removeformat | ' +
+               'bullist numlist | ' +
+               'link image',
+      body_class: 'post-editor-body',
+      content_style: '.post-editor-body {font-size: 16px}',
       height: 300,
     });
 
-    // Subscribe to polymer events.
-    this.postButton.addEventListener("tap", this.handlePost);
-    this.saveButton.addEventListener("tap", this.handleSave);
-    this.cancelButton.addEventListener("tap", this.handleCancel);
-
     // Mark post button as initialy disabled.
-    //this.postButton.setAttribute("disabled", "");
+    //this.postButton.setAttribute('disabled', '');
 
     // TODO: Add api key (need to publish this).
 
@@ -34,7 +31,7 @@ PostForm = React.createClass({
     // while (this.recipients.selectedObjects) {
     //   this.recipients.removeSelectedObjectByIndex(0);
     // }
-    this.recipients.remoteUrl = "/api/recipients?q=%QUERY";
+    this.recipients.remoteUrl = '/api/recipients?q=%QUERY';
   },
 
   // Handle clicking on the 'Post' button.
@@ -65,13 +62,13 @@ PostForm = React.createClass({
     const recipientUsers = [];
     const recipientChannels = [];
     this.recipients.selectedObjects.forEach((r) => {
-      const [rtype, rkey] = r.tag.split(":");
-      if (rtype == "user") {
+      const [rtype, rkey] = r.tag.split(':');
+      if (rtype == 'user') {
         recipientUsers.push(rkey);
-      } else if (rtype == "channel") {
+      } else if (rtype == 'channel') {
         recipientChannels.push(rkey);
       } else {
-        throw new Error("Invalid recipient type: " + rtype);
+        throw new Error('Invalid recipient type: ' + rtype);
       }
     });
 
@@ -83,7 +80,7 @@ PostForm = React.createClass({
       body: tinymce.activeEditor.getContent({format : 'raw'})
     };
 
-    Meteor.call("post", post, publish, (error, result) => {
+    Meteor.call('post', post, publish, (error, result) => {
       if (error) {
         this.errorDialog.show(error.error);
       } else {
@@ -95,11 +92,11 @@ PostForm = React.createClass({
 
   // Check to make sure they have filled out the required fields.
   ensureValidPost() {
-    var msg = "";
+    var msg = '';
     if (this.recipients.selectedObjects.length == 0) {
-      msg = "Please enter at least once recipient.";
+      msg = 'Please enter at least once recipient.';
     } else if (!this.titleField.value) {
-      msg = "Please enter a title for this post.";
+      msg = 'Please enter a title for this post.';
     }
 
     if (msg) {
@@ -112,30 +109,30 @@ PostForm = React.createClass({
 
   render() {
     return (
-      <form className="post-form layout vertical fit">
+      <form className='post-form layout vertical fit'>
         <paper-input-autocomplete-chips
-            class="post-form-field-recipients"
-            label="To:"
-            max-suggestions="5"
-            placeholder="Recipients"
-            allow-select-unknown-token="true"
+            class='post-form-field-recipients'
+            label='To:'
+            max-suggestions='5'
+            placeholder='Recipients'
+            allow-select-unknown-token='true'
             ref={(el) => this.recipients = el}></paper-input-autocomplete-chips>
         <paper-input
-            class="post-form-field-title no-label-float"
-            label="Post Title"
+            class='post-form-field-title no-label-float'
+            label='Post Title'
             ref={(el) => this.titleField = el}></paper-input>
         <textarea
-            className="post-editor post-form-field-body"></textarea>
-        <div className="post-form-buttons layout horizontal end-justified">
+            className='post-editor post-form-field-body'></textarea>
+        <div className='post-form-buttons layout horizontal end-justified'>
           <paper-button
-              class="post-form-cancel"
-              ref={(el) => this.cancelButton = el}>Cancel</paper-button>
+              class='post-form-cancel'
+              on-tap='handleCancel'>Cancel</paper-button>
           <paper-button raised
-              class="post-form-submit"
-              ref={(el) => this.saveButton = el}>Save Draft</paper-button>
+              class='post-form-submit'
+              on-tap='handleSave'>Save Draft</paper-button>
           <paper-button raised
-              class="post-form-submit"
-              ref={(el) => this.postButton = el}>Post</paper-button>
+              class='post-form-submit'
+              on-tap='handlePost'>Post</paper-button>
         </div>
         <ErrorDialog ref={(el) => this.errorDialog = el} />
       </form>

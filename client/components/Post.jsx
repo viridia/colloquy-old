@@ -1,10 +1,14 @@
 // Post component - represents a single post
 Post = React.createClass({
-  mixins: [ReactMeteorData],
+  mixins: [ReactMeteorData, PolymerEventListener],
 
   getMeteorData () {
     var data = {
-      title: '',
+      post: {
+        authorId: '',
+        title: '',
+        body: '',
+      },
       comments: []
     };
 
@@ -39,13 +43,21 @@ Post = React.createClass({
     console.log('Delete');
   },
 
+  handleLike() {
+    console.log('Like');
+  },
+
+  handleReply() {
+    console.log('Reply');
+  },
+
   renderBodyHTML() {
     return { __html: this.data.post.body };
   },
 
   renderEditButton() {
     if (this.data.post && canEditPost(this.data.post)) {
-      return <paper-icon-button icon='create' onTap={this.handleEdit}></paper-icon-button>
+      return <paper-icon-button icon='create' on-tap="handleEdit"></paper-icon-button>
     } else {
       return '';
     }
@@ -53,7 +65,7 @@ Post = React.createClass({
 
   renderDeleteButton() {
     if (this.data.post && canEditPost(this.data.post)) {
-      return <paper-icon-button icon='delete' onTap={this.handleDelete}></paper-icon-button>
+      return <paper-icon-button icon='delete' on-tap="handleDelete"></paper-icon-button>
     } else {
       return '';
     }
@@ -103,10 +115,11 @@ Post = React.createClass({
         </div>
         {this.renderComments()}
         <div className='post-buttons layout horizontal end-justified'>
-          <paper-icon-button icon='favorite'></paper-icon-button>
+          <paper-icon-button icon='favorite'
+              on-tap="handleLike"></paper-icon-button>
           {this.renderEditButton()}
           {this.renderDeleteButton()}
-          <paper-button>
+          <paper-button on-tap="handleReply">
             <iron-icon icon='reply'></iron-icon>
             Reply
           </paper-button>

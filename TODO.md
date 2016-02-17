@@ -2,7 +2,6 @@
 
 ## Next Steps
 
-* I'd really like a better way to subscribe to tap events.
 * Change 'editedAt' field to 'lastTouched?'. We want to know when was the most
   recent edit or commment.
 * Publish channels to the client (right now two independent collections).
@@ -25,6 +24,7 @@
 
 ## Future Steps
 
+* I'd really like a better way to subscribe to tap events.
 * Think about how we're going to store the 'read state' per post per user.
 * Think about how to hide MedBook collaborations behind an interface.
 * Figure out how to use flex sizing with TinyMCE.
