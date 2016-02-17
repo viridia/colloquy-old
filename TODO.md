@@ -2,12 +2,13 @@
 
 ## Next Steps
 
-* Change 'editedAt' field to 'lastTouched?'. We want to know when was the most
-  recent edit or commment.
+* Explore embeds.
 * Publish channels to the client (right now two independent collections).
   * This requires seeding.
   * Also requires thinking about how we're going to integrate with MedBook.
 * Generate initials for channel avatars.
+* Publish channels on the client.
+  * Fix up every place where we aren't lookup up a channel.
 * Single post page.
   * Comment entry
   * Comment display
@@ -54,22 +55,16 @@
 
 * Methods
   * Posting
-    * Save Post
-      * Option: Save Draft (don't publish)
-      * Option: Edit Existing Post
     * Delete Post
     * Approve Post
     * Unapprove Post
-    * Bump Post Views
     * Bump Post Clicks
 
   * New Comment
   * Edit Comment
   * List Post Summaries (query)
   * Get Post
-  * View Post
   * View Notifications
-  * Like Post
   * Share Post
   * Get Settings
   * Update Settings

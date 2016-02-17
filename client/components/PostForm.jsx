@@ -22,16 +22,34 @@ PostForm = React.createClass({
       height: 300,
     });
 
-    // Mark post button as initialy disabled.
-    //this.postButton.setAttribute('disabled', '');
+    this.recipients.remoteUrl = '/api/recipients?q=%QUERY';
+    this.updateFields();
 
     // TODO: Add api key (need to publish this).
+    // TODO: Set initial focus and cursor position.
+  },
 
-    // A/c widget doesn't have a 'clear' function.
-    // while (this.recipients.selectedObjects) {
-    //   this.recipients.removeSelectedObjectByIndex(0);
-    // }
-    this.recipients.remoteUrl = '/api/recipients?q=%QUERY';
+  componentDidUpdate() {
+    this.updateFields();
+  },
+
+  // Populate editor fields with post.
+  updateFields() {
+    if (this.props.post) {
+      tinymce.activeEditor.setContent(this.props.post.body);
+      // Don't allow the recipients to be changed once a post has been published.
+      // if (this.props.post.status != Status.DRAFT) {
+      //   this.recipients.setAttribute('disabled', '');
+      // }
+      // this.recipients.splice(
+      //     'selectedObjects', 0, this.recipients.selectedObjects.length, this.props.recipients);
+    } else {
+      // Clear the list of recipients for new post.
+      // if (this.recipients.selectedObjects) {
+      //   this.recipients.splice('selectedObjects', 0, this.recipients.selectedObjects.length);
+      // }
+      this.recipients.removeAttribute('disabled');
+    }
   },
 
   // Handle clicking on the 'Post' button.
@@ -72,7 +90,6 @@ PostForm = React.createClass({
       }
     });
 
-    // TODO: Add post id if editing an existing post.
     const post = {
       recipientUsers: recipientUsers,
       recipientChannels: recipientChannels,
@@ -80,7 +97,15 @@ PostForm = React.createClass({
       body: tinymce.activeEditor.getContent({format : 'raw'})
     };
 
-    Meteor.call('post', post, publish, (error, result) => {
+    // Select whether we are creating a new post or editing an existing one.
+    var method = 'post';
+    if (this.props.post) {
+      post._id = this.props.post._id;
+      method = 'editPost';
+    }
+
+    // Ask the server to store this post.
+    Meteor.call(method, post, publish, (error, result) => {
       if (error) {
         this.errorDialog.show(error.error);
       } else {
@@ -93,7 +118,9 @@ PostForm = React.createClass({
   // Check to make sure they have filled out the required fields.
   ensureValidPost() {
     var msg = '';
-    if (this.recipients.selectedObjects.length == 0) {
+    // TODO: Temporarily disable this check for editing existing posts because we're having
+    // trouble pre-populating the recipients widget.
+    if (this.recipients.selectedObjects.length == 0 && !this.props.post) {
       msg = 'Please enter at least once recipient.';
     } else if (!this.titleField.value) {
       msg = 'Please enter a title for this post.';
@@ -120,6 +147,7 @@ PostForm = React.createClass({
         <paper-input
             class='post-form-field-title no-label-float'
             label='Post Title'
+            value={this.props.post && this.props.post.title}
             ref={(el) => this.titleField = el}></paper-input>
         <textarea
             className='post-editor post-form-field-body'></textarea>
@@ -127,9 +155,10 @@ PostForm = React.createClass({
           <paper-button
               class='post-form-cancel'
               on-tap='handleCancel'>Cancel</paper-button>
-          <paper-button raised
-              class='post-form-submit'
-              on-tap='handleSave'>Save Draft</paper-button>
+          {this.props.post && this.props.post.status == Status.PUBLISHED ? '' :
+            (<paper-button raised
+                class='post-form-submit'
+                on-tap='handleSave'>Save Draft</paper-button>)}
           <paper-button raised
               class='post-form-submit'
               on-tap='handlePost'>Post</paper-button>

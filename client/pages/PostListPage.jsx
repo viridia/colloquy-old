@@ -6,7 +6,7 @@ PostListPage = React.createClass({
     var data = { posts: [] };
     var handle = Meteor.subscribe("posts");
     if (handle.ready()) {
-      data.posts = Posts.find({}, { sort: { "editedAt": -1}}).fetch();
+      data.posts = Posts.find({}, { sort: { "updatedAt": -1}}).fetch();
     }
     return data;
   },

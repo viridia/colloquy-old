@@ -19,12 +19,12 @@ Post = React.createClass({
       const userId = Meteor.userId();
       if (post) {
         data.post = post;
-        data.age = humanizedAge(post.editedAt);
+        data.age = humanizedAge(post.updatedAt);
         data.isLiked = _.contains(post.likes, userId);
         // Update the view count if the post id changed.
         if (Session.get('prevPost') != this.props.postId) {
           Session.set('prevPost', this.props.postId);
-          Meteor.call('view', post._id);
+          Meteor.call('viewPost', post._id);
         }
       }
     }
@@ -44,7 +44,7 @@ Post = React.createClass({
   },
 
   handleEdit() {
-    console.log('Edit');
+    window.HISTORY.push("/post/" + this.data.post.slug);
   },
 
   handleDelete() {
@@ -53,9 +53,9 @@ Post = React.createClass({
 
   handleLike() {
     if (this.data.isLiked) {
-      Meteor.call('unlike', this.data.post._id);
+      Meteor.call('unlikePost', this.data.post._id);
     } else {
-      Meteor.call('like', this.data.post._id);
+      Meteor.call('likePost', this.data.post._id);
     }
   },
 

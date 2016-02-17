@@ -21,7 +21,7 @@ PostSummary = React.createClass({
       </td>
       <td className="replies">{post.commentCount}</td>
       <td className="views">{post.viewCount}</td>
-      <td className="activity">{humanizedAge(post.editedAt)}</td>
+      <td className="activity">{humanizedAge(post.updatedAt || post.editedAt)}</td>
     </tr>);
   }
 });
