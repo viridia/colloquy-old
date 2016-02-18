@@ -13,19 +13,26 @@ Post = React.createClass({
       comments: []
     };
 
-    var postsHandle = Meteor.subscribe('post', this.props.postId);
+    var postsHandle = Meteor.subscribe('postAndComments', this.props.postSlug);
     if (postsHandle.ready()) {
-      const post = Posts.findOne({ slug: this.props.postId });
+      const post = Posts.findOne({ slug: this.props.postSlug });
       const userId = Meteor.userId();
       if (post) {
         data.post = post;
         data.age = humanizedAge(post.updatedAt);
         data.isLiked = _.contains(post.likes, userId);
+        data.comments = [];
         // Update the view count if the post id changed.
-        if (Session.get('prevPost') != this.props.postId) {
-          Session.set('prevPost', this.props.postId);
+        if (Session.get('prevPost') != this.props.postSlug) {
+          Session.set('prevPost', this.props.postSlug);
           Meteor.call('viewPost', post._id);
         }
+        Comments.find({ parentPost: post._id }).forEach((comment) => {
+          data.comments.push({
+            comment: comment,
+            children: []
+          });
+        });
       }
     }
     return data;
@@ -111,15 +118,12 @@ Post = React.createClass({
     if (this.data.comments.length > 0) {
       return (
         <div className='post-comments'>
-          {this.data.comments.map(this.renderComment)}
+          {this.data.comments.map((entry) => (
+              <Comment comment={entry.comment} key={entry.comment._id}></Comment>))}
         </div>);
     } else {
       return '';
     }
-  },
-
-  renderComment(comment, index) {
-    return <Comment comment={comment} key={index}></Comment>
   },
 
   render() {

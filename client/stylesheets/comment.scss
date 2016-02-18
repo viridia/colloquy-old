@@ -1,10 +1,12 @@
+@import "colors.scss";
+
 .comment {
   margin: 8px 0;
 }
 
 .comment-author-avatar {
-  background-color: #ccd;
   border-radius: 50%;
+  overflow: hidden;
   width: 32px;
   height: 32px;
   margin: 0 8px;
@@ -12,7 +14,7 @@
 
 .comment-info {
   font-size: small;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .comment-author {
@@ -20,10 +22,14 @@
 }
 
 .comment-age {
-  color: #888;
+  color: $light-text-color;
   margin-left: 8px;
 }
 
 .comment-body {
   font-size: 14px;
+}
+
+.comment-body p {
+  margin: 6px 0 0 0;
 }

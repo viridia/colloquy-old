@@ -2,6 +2,9 @@
 // Rounds up to the next time unit if close to the threshold, e.g. 50 seconds
 // prints as '1m'.
 humanizedAge = function(date) {
+  if (!date) {
+    return 'a while ago';
+  }
   const ms = new Date() - date;
   const seconds = Math.floor(ms / 1000);
   if (seconds < 50) {

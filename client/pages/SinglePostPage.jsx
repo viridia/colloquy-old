@@ -5,7 +5,7 @@ SinglePostPage = React.createClass({
       <paper-header-panel className="flex">
         <AppBar />
         <div className="post-list">
-          <Post postId={this.props.params.postId}></Post>
+          <Post postSlug={this.props.params.postId}></Post>
         </div>
       </paper-header-panel>
     );
