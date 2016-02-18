@@ -90,17 +90,18 @@ Post = React.createClass({
     // Polymer needs the 'active' attribute to be completely gone, but React only auto-removes
     // falsy attributes if they are native.
     if (this.data.isLiked) {
-      return (<paper-icon-button class='like-button' icon='favorite' toggles active
+      return (<paper-icon-button class='like-button' title="Like" icon='favorite' toggles active
           on-tap="handleLike"></paper-icon-button>);
     } else {
-      return (<paper-icon-button class='like-button' icon='favorite' toggles
+      return (<paper-icon-button class='like-button' title="Like" icon='favorite' toggles
           on-tap="handleLike"></paper-icon-button>);
     }
   },
 
   renderEditButton() {
     if (this.data.post && canEditPost(this.data.post)) {
-      return <paper-icon-button icon='create' on-tap="handleEdit"></paper-icon-button>
+      return (<paper-icon-button icon='create'
+                  title="Edit Topic" on-tap="handleEdit"></paper-icon-button>);
     } else {
       return '';
     }
@@ -108,7 +109,8 @@ Post = React.createClass({
 
   renderDeleteButton() {
     if (this.data.post && canEditPost(this.data.post)) {
-      return <paper-icon-button icon='delete' on-tap="handleDelete"></paper-icon-button>
+      return (<paper-icon-button icon='delete'
+                  title="Delete Topic" on-tap="handleDelete"></paper-icon-button>);
     } else {
       return '';
     }

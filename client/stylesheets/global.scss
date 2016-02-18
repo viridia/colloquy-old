@@ -31,12 +31,6 @@ paper-button[compact] {
   font-size: 90%;
 }
 
-// TODO: Figure out why this doesn't work, it should.
-paper-badge {
-  --paper-badge-margin-left: -8px;
-  --paper-badge-margin-bottom: -12px;
-}
-
 .avatar-small {
   display: inline-block;
   width: 32px;
