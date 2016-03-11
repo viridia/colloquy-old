@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Form for editing a comment
 CommentForm = React.createClass({
   mixins: [PolymerEventListener],

@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Page showing a list of post summaries
 PostListPage = React.createClass({
   mixins: [ReactMeteorData],
@@ -36,3 +38,5 @@ PostListPage = React.createClass({
     );
   }
 });
+
+export default PostListPage;

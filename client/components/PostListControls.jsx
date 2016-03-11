@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Controls that appear above the list of post summaries.
 PostListControls = React.createClass({
   render() {

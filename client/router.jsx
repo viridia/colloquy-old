@@ -1,12 +1,13 @@
-const {
-  Router,
-  Route,
-  IndexRoute,
-  NotFoundRoute,
-} = ReactRouter;
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Router, Route, IndexRoute, NotFoundRoute, browserHistory } from "react-router";
+import App from './App.jsx';
+import PostEditPage from './pages/PostEditPage.jsx';
+import PostListPage from './pages/PostListPage.jsx';
+import SinglePostPage from './pages/SinglePostPage.jsx';
 
 // A history object must be created to maintain the history for our router
-const history = ReactRouter.history.createHistory();
+const history = browserHistory;
 // TODO: Remove evil global. Unfortunately, Router doesn't give us any way
 // to pass the history into the App object so that it can set it as a context.
 window.HISTORY = history;

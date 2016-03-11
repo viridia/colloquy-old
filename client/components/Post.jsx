@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Post component - represents a single post
 Post = React.createClass({
   mixins: [ReactMeteorData, PolymerEventListener],

@@ -1,4 +1,5 @@
-const { Link } = ReactRouter;
+import React from 'react';
+import { Link } from 'react-router';
 
 // Post summary - a single entry in the post summary list.
 PostSummary = React.createClass({

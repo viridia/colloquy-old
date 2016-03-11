@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 // Renders either a 'new post' or 'sign in to post' button depending on whether
 // the user has logged in.
 NewPostButton = React.createClass({

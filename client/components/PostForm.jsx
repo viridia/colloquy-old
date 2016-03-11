@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Form for editing a post
 PostForm = React.createClass({
   mixins: [PolymerEventListener],

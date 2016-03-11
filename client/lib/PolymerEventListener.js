@@ -1,3 +1,5 @@
+import ReactDOM from 'react-dom';
+
 const OBJECT_KEY = '__PEL__';
 
 // A mixin class which listens for polymer events and dispatches them to the handler specified

@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Comment component - represents a commment to a post
 Comment = React.createClass({
   renderBodyHTML() {

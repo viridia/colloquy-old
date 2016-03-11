@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Application header bar
 AppBar = React.createClass({
   render() {

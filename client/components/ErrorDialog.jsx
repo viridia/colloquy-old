@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Generic polymer error dialog
 ErrorDialog = React.createClass({
   show(message) {

@@ -1,11 +1,18 @@
 Accounts.onCreateUser(function(options, user) {
+  if (options.profile) {
+    user.profile = options.profile;
+  }
   if (!user.profile) {
     user.profile = {};
   }
   user.profile.avatarUrl = Avatar.getUrl(user);
   // Ensure that there is always a profile name.
-  if (!user.profile.name && user.username) {
-    user.profile.name = user.username;
+  if (!user.profile.name) {
+    if (user.username) {
+      user.profile.name = user.username;
+    } else {
+      // Otherwise throw an error?
+    }
   }
   return user;
 });

@@ -1,3 +1,5 @@
+import React from 'react';
+
 // Component that displays a single avatar image.
 Avatar = React.createClass({
   mixins: [ReactMeteorData],

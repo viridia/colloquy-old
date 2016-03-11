@@ -1,3 +1,5 @@
+import React from 'react';
+
 // A Page showing a single post
 SinglePostPage = React.createClass({
   render() {
@@ -11,3 +13,5 @@ SinglePostPage = React.createClass({
     );
   }
 });
+
+export default PostListPage;

@@ -1,3 +1,5 @@
+import React from 'react';
+
 // The Post Edit / Post Create page
 PostEditPage = React.createClass({
   mixins: [ReactMeteorData],
@@ -39,3 +41,6 @@ PostEditPage = React.createClass({
     );
   }
 });
+
+
+export default PostEditPage;
