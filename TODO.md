@@ -6,17 +6,21 @@
 * Publish channels to the client (right now two independent collections).
   * This requires seeding.
   * Also requires thinking about how we're going to integrate with MedBook.
-* Generate initials for channel avatars.
-* Publish channels on the client.
+  * This would be a great use case for Apollo if it was ready.
   * Fix up every place where we aren't lookup up a channel.
+* Generate initials for channel avatars.
 * Single post page.
   * Comment entry
   * Comment display
   * Attachments
   * Embedding
 * Add user account stuff - login, etc.
+  * We want to use something like useraccounts:polymer
 * Tests
+  * Should be easier now that we've moved to Meteor 1.3.
 * Publish the user's api key to the client, and then use in autocomplete.
+  * Right now ac is wide open, both in sense of security and in the sense
+    of what channels are visible.
 * Do we want to prevent chips from accepting invalid names?
 
 ## Bugs:

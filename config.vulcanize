@@ -3,8 +3,7 @@
     "useShadowDom": true,
     "imports": [
         "/components/iron-autogrow-textarea/iron-autogrow-textarea.html",
-        "/components/iron-flex-layout/iron-flex-layout.html",
-        "/components/iron-flex-layout/classes/iron-flex-layout.html",
+        "/components/iron-flex-layout/iron-flex-layout-classes.html",
         "/components/iron-icons/iron-icons.html",
         "/components/iron-icons/editor-icons.html",
         "/components/iron-icons/social-icons.html",
