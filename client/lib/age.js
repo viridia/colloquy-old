@@ -1,11 +1,12 @@
 // Return the age of a post in 'humanized' form, such as 1s, 2m, etc.
 // Rounds up to the next time unit if close to the threshold, e.g. 50 seconds
 // prints as '1m'.
-humanizedAge = function(date) {
+humanizedAge = function(date, opt_now) {
+  var now = opt_now || new Date();
   if (!date) {
     return 'a while ago';
   }
-  const ms = new Date() - date;
+  const ms = now - date;
   const seconds = Math.floor(ms / 1000);
   if (seconds < 50) {
     return seconds + 's';
@@ -29,3 +30,5 @@ humanizedAge = function(date) {
   const years = Math.floor(days / 365);
   return years + 'y';
 }
+
+export { humanizedAge };
